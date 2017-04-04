@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"net/http"
 )
 
@@ -10,6 +12,9 @@ func NotImplemented(w http.ResponseWriter) {
 }
 
 func HandleRegistration(w http.ResponseWriter, r *http.Request) {
+
+	log.Printf("Received request /registration -- Method: %s  Body: %s", r.Method, r.Body)
+
 	switch r.Method {
 	case http.MethodPost:
 
@@ -20,9 +25,11 @@ func HandleRegistration(w http.ResponseWriter, r *http.Request) {
 
 		if err := decoder.Decode(&reg); nil != err {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
+			log.Printf("Failed to decode JSON in HandleRegistration")
 			return
 		} else if reg.UUID == "" {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
+			log.Printf("Registration requires UUID")
 			return
 		}
 
@@ -30,6 +37,8 @@ func HandleRegistration(w http.ResponseWriter, r *http.Request) {
 		if nil != err {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
+
+		fmt.Fprint(w, "OK")
 
 	default:
 		NotImplemented(w)

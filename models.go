@@ -1,6 +1,6 @@
 package main
 
-type UUIDT string
+type TypeUUID string
 
 // Registration metrics captured during signup
 type Registration struct {
@@ -14,7 +14,7 @@ type Registration struct {
 	ChildAges []int `json:"childages"`
 
 	// Unique identifier of the user
-	UUID UUIDT `json:"uuid"`
+	UUID TypeUUID `json:"uuid"`
 
 	// Datetime registration timestamp
 	Datetime string `json:"datetime"`
@@ -27,7 +27,7 @@ type Progress struct {
 	Stars int `json:"stars"`
 
 	// Associated user
-	UUID string `json:"uuid"`
+	UUID TypeUUID `json:"uuid"`
 
 	// Datetime event timestamp
 	Datetime string `json:"datetime"`
