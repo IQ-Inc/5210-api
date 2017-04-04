@@ -19,3 +19,15 @@ docker run -it -p [YOUR_FAVORITE_PORT]:9000 --name letsmove-api letsmove
 
 Use CTRL-C to exit the running container. Use `docker start -a letsmove-api` 
 to start and re-attach to the container.
+
+## Usage: Go
+
+With a valid installation of Go, clone the repository in your `$GOPATH/src` directory.
+
+Quickstart:
+
+```
+go run main.go
+```
+
+To build the binary, execute `go build` in the directory.
