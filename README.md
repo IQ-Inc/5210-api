@@ -33,7 +33,17 @@ go run main.go
 
 To build the binary, execute `go build` in the directory.
 
-### Local DynamoDB
+### Tools: `listandscan.go`
+
+`listandscan.go` can be configured to list every DynamoDB table, and
+scan for all items in each table. Utility has not been tested against large or
+many tables. Use cautiously.
+
+```
+go run utils/listandscan.go
+```
+
+### Tools: Local DynamoDB
 
 Source the environment variables in `fakeaws.sh`:
 
@@ -55,10 +65,4 @@ docker run -d -p [ANOTHER_FAVORITE_PORT]:8000 dwmkerr/dynamodb
 Once DynamoDB is running, access the shell at `http://localhost:8000/shell`.
 Hit the gear ("settings") icon in the menu bar, and set the Access key
 ID to the key in `fakeaws.sh`. Create a table by following the tutorial, or by
-using the "CreateTable" Javascript template. You may test the efficacy by
-running the `listtables.go` utility:
-
-```
-
-go run utils/listtables.go
-```
+using the "CreateTable" Javascript template.
