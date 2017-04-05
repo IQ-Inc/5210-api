@@ -2,19 +2,23 @@ package main
 
 import (
 	"context"
+	"log"
+	"net/http"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"log"
-	"net/http"
 )
 
-const (
-	// Server port
-	Port = ":9000"
+// ContextKey key type for context
+type ContextKey string
 
-	// Context key of the database
-	ContextKeyDB = "db"
+const (
+	// Port erver port
+	Port string = ":9000"
+
+	// ContextKeyDB context key of the database
+	ContextKeyDB ContextKey = "db"
 )
 
 func main() {

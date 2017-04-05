@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"net/http"
 )
 
@@ -13,7 +14,7 @@ type ContextHandler interface {
 // ContextHandlerFunc types the ContextHandler interface method
 type ContextHandlerFunc func(context.Context, http.ResponseWriter, *http.Request)
 
-// ContextHandlerFuncts implement the ContextHandler interface
+// ServeHTTPContext implement the ContextHandler interface
 func (h ContextHandlerFunc) ServeHTTPContext(ctx context.Context, rw http.ResponseWriter, req *http.Request) {
 	h(ctx, rw, req)
 }
@@ -25,6 +26,7 @@ type ContextAdapter struct {
 }
 
 // ContextAdapter conforms to an HTTPHandler
-func (ca *ContextAdapter) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	ca.handler.ServeHTTPContext(ca.ctx, rw, req)
+func (ca *ContextAdapter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Received request %s -- Method: %s", r.URL, r.Method)
+	ca.handler.ServeHTTPContext(ca.ctx, w, r)
 }

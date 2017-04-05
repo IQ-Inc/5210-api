@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
+	"log"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	"log"
 )
 
 // Store uses a database context to store a DynamoMapper data item
@@ -14,9 +15,7 @@ func Store(ctx context.Context, data DynamoMapper) error {
 	log.Printf("Storing %v", data)
 
 	cmd := &dynamodb.PutItemInput{
-
-		// TODO generalize table somehow...
-		TableName: aws.String("TestTable"),
+		TableName: aws.String(data.GetTable()),
 		Item:      data.DynamoMap(),
 	}
 

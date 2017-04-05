@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
 
 // NotImplemented returns a not implemented status to the client
@@ -16,8 +17,6 @@ func NotImplemented(w http.ResponseWriter, r *http.Request) {
 
 // HandleRegistration handle user registration, storing data in the database.
 func HandleRegistration(ctx context.Context, w http.ResponseWriter, r *http.Request) {
-
-	log.Printf("Received request %s -- Method: %s", r.URL, r.Method)
 
 	switch r.Method {
 	case http.MethodPost:
@@ -31,11 +30,14 @@ func HandleRegistration(ctx context.Context, w http.ResponseWriter, r *http.Requ
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			log.Printf("Failed to decode JSON in HandleRegistration")
 			return
-		} else if reg.UUID == "" {
+		} else if reg.ID == "" {
 			http.Error(w, "Bad Request", http.StatusBadRequest)
 			log.Printf("Registration requires UUID")
 			return
 		}
+
+		reg.table = "Registration"
+		reg.timestamp = time.Now()
 
 		err := Store(ctx, &reg)
 		if nil != err {
@@ -46,6 +48,6 @@ func HandleRegistration(ctx context.Context, w http.ResponseWriter, r *http.Requ
 
 	// No other HTTP verbs implemented
 	default:
-		NotImplemented(w, nil)
+		NotImplemented(w, r)
 	}
 }
